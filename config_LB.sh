@@ -3,12 +3,12 @@
 
 function crear_Dir(){
 	if [ -d "$HOME/tmp" ]; then
-		cd $HOME/tmp
-		chown -R $USER:$USER $HOME/tmp
+		cd $HOME/libreoffice
+		chown -R $USER:$USER $HOME/libreoffice
 	else
-		mkdir -p $HOME/tmp
-		chown -R $USER:$USER $HOME/tmp
-		cd $HOME/tmp
+		mkdir -p $HOME/libreoffice
+		chown -R $USER:$USER $HOME/libreoffice
+		cd $HOME/libreoffice
 	fi
 }
 
@@ -27,16 +27,19 @@ function lb_LanguageTool(){
 
 	crear_Dir # llamando a la funcion que crea el directorio tmporal	
 	
-	dirActual = $(pwd)
-
-	if [ "$dirActual" = "$HOME/tmp" ]; then
-		echo "Descargando la extensión LanguageTool..."
-		sleep 1;
-		wget -c $DOWN
+	dirActual=$(pwd)
+	
+	if [ "$dirActual" == "$HOME/libreoffice" ]; then
+		if [ -f "$HOME/LanguageTool-2.8.oxt" ]; then
+			echo "El fichero \"LanguageTool-2.8.oxt\" existe"
+		else
+			echo "Descargando la extensión LanguageTool-2.8.oxt..."
+			echo; sleep 1
+			wget -c $DOWN
+		fi
 	else
 		echo "No se ha podido descargar la extensión..."
-	fi
-	
+	fi	
 }
 
 function lb_Extensiones(){
@@ -48,25 +51,14 @@ function lb_Extensiones(){
 
 	TRUE="true"
 	local opt
-	echo "1) Diccionario español Argentino - v 1.1.1"
-	echo "2) Diccionario español Español y America Latina - v 0.5"
-	echo "3) Diccionario español Español - v 0.6"
-	echo "4) Salir de este menu"
-	read -p "Ingrese el numero de la accion que desar realizar: " opt
 	while [ "$TRUE" == "true" ];do
-		if [ "$opt" != "1" ] && [ "$opt" != "2" ] && [ "$opt" != "3" ]; then
-			TRUE="false"
-			case $opt in	
-				4)
-					break
-					;;
-				*)
-					echo "Ingresaste la opcion incorrecta"
-					break
-					;;
-			esac
-		else		
-			case $opt in
+		echo " 1) Diccionario español Argentino - v 1.1.1"
+		echo " 2) Diccionario español Español y America Latina - v 0.5"
+		echo " 3) Diccionario español Español - v 0.6"
+		echo " 4) Salir de este menu"
+		read -p " Ingrese el numero de la accion que desar realizar: " opt
+		clear
+		case $opt in
 				1)
 					wget -c $es_AR
 					clear
@@ -79,13 +71,7 @@ function lb_Extensiones(){
 					wget -c $es_ES
 					clear
 					;;
-				esac
-				echo "1) Diccionario español Argentino - v 1.1.1"
-				echo "2) Diccionario español Español y America Latina - v 0.5"
-				echo "3) Diccionario español Español - v 0.6"
-				echo "4) Salir de este menu"		
-				read -p "Ingrese el numero de la accion que desar realizar: " opt
-		fi
+		esac		
 done
 }
 
@@ -95,21 +81,17 @@ function lb_Apariencia(){
 
 TRUE="true"
 while [ "$TRUE" == "true" ]; do
-	echo "Menú principal"
-	echo "1) Instalar el idioma español en Libre Office"
-	echo "2) Instalar los diccionarios desde los repositorios"
-	echo "3) Descargar extensiones para Libre Office (Ortográfia)"
-	echo "4) Instalar set de iconos para Libre Office"
-	echo "0) Salir"
+	echo "      ....:::: Menú principal ::::...."
 	echo
-	read -p "Elija la opcion que desea ejecutar: " opt
+	echo " 1) Instalar el idioma español en Libre Office"
+	echo " 2) Instalar los diccionarios desde los repositorios"
+	echo " 3) Descargar extensiones para Libre Office (Ortográfia)"
+	echo " 4) Instalar set de iconos para Libre Office"
+	echo " 5) Salir de este menú"
+	echo
+	read -p " Elija la opcion que desea ejecutar: " opt
 	clear
 	case $opt in
-		0)
-			echo "Saliendo..."; sleep 2
-			clear
-			exit 0
-			;;
 		1)
 			;;
 		2)
@@ -117,6 +99,11 @@ while [ "$TRUE" == "true" ]; do
 		3)
 			;;
 		4)
+			;;
+		5)
+			echo "Saliendo..."; sleep 2
+			clear
+			exit 0
 			;;
 	esac
 done
