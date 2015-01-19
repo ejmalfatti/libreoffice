@@ -93,14 +93,33 @@ function lb_Apariencia(){
 	apt-get -y install libreoffice-style-crystal libreoffice-style-galaxy libreoffice-style-hicontrast libreoffice-style-human libreoffice-style-oxygen libreoffice-style-sifr libreoffice-style-tango
 }
 
-
-echo "Menú principal"
-echo "1) Instalar el idioma español en Libre Office"
-echo "2) Instalar los diccionarios desde los repositorios"
-echo "3) Descargar extensiones para Libre Office (Ortográfia)"
-echo "4) Instalar set de iconos para Libre Office"
-read -p "Elija la opcion que desea ejecutar: " opt
-
+TRUE="true"
+while [ "$TRUE" == "true" ]; do
+	echo "Menú principal"
+	echo "1) Instalar el idioma español en Libre Office"
+	echo "2) Instalar los diccionarios desde los repositorios"
+	echo "3) Descargar extensiones para Libre Office (Ortográfia)"
+	echo "4) Instalar set de iconos para Libre Office"
+	echo "0) Salir"
+	echo
+	read -p "Elija la opcion que desea ejecutar: " opt
+	clear
+	case $opt in
+		0)
+			echo "Saliendo..."; sleep 2
+			clear
+			exit 0
+			;;
+		1)
+			;;
+		2)
+			;;
+		3)
+			;;
+		4)
+			;;
+	esac
+done
 
 #	Fuentes:
 #	http://extensions.libreoffice.org/extension-center/languagetool
