@@ -2,12 +2,12 @@
 # -- UTF 8 --
 
 function crear_Dir(){
-	if [ -d "$HOME/tmp" ]; then
+	if [ -d "$HOME/libreoffice" ]; then
+		#chown -R $USER:$USER $HOME/libreoffice
 		cd $HOME/libreoffice
-		chown -R $USER:$USER $HOME/libreoffice
 	else
 		mkdir -p $HOME/libreoffice
-		chown -R $USER:$USER $HOME/libreoffice
+		#chown -R $USER:$USER $HOME/libreoffice
 		cd $HOME/libreoffice
 	fi
 }
@@ -17,6 +17,8 @@ function lb_Espaniol(){
 	echo " Instalando el idioma español para LibreOffice"
 	echo; sleep 1
 	apt-get -y install libreoffice-l10n-es
+	echo
+	read -p "Proceso terminado. Presione cualquier tecla..." S
 	clear
 }
 
@@ -25,6 +27,8 @@ function lb_Ortografia(){
 	echo " Instalando los diccionarios desde repositorios"
 	echo; sleep 1
 	apt-get -y install myspell-es aspell aspell-es
+	echo
+	read -p "Proceso terminado. Presione cualquier tecla..." S
 	clear
 }
 
@@ -32,8 +36,10 @@ function lb_LanguageTool(){
 	#sudo apt-get -y install openoffice.org-java-common # Java para OpenOffice 
 	clear
 	echo " Instalando Java para LibreOffice"
-	echo; sleep 1
+	echo; sleep 2
 	apt-get -y install libreoffice-java-common # Java para LibreOffice
+	echo
+	read -p "Proceso terminado. Presione cualquier tecla..." S
 	
 	DOWN="http://www.languagetool.org/download/LanguageTool-2.8.oxt"
 
@@ -42,15 +48,18 @@ function lb_LanguageTool(){
 	dirActual=$(pwd)
 	
 	if [ "$dirActual" == "$HOME/libreoffice" ]; then
-		if [ -f "$HOME/LanguageTool-2.8.oxt" ]; then
-			echo " El fichero \"LanguageTool-2.8.oxt\" existe"
-		else
-			echo " Descargando la extensión LanguageTool-2.8.oxt..."
-			echo; sleep 1
-			wget -c $DOWN
-		fi
+		clear
+		echo " Descargando la extensión LanguageTool-2.8.oxt..."
+		echo; sleep 1
+		wget -c $DOWN
+		echo
+		read -p "Proceso terminado. Presione cualquier tecla..." S
+		clear
 	else
+		clear
 		echo " No se ha podido descargar la extensión..."
+		sleep 2
+		clear
 	fi	
 }
 
@@ -58,7 +67,7 @@ function lb_Extensiones(){
 	clear
 	es_AR="http://ufpr.dl.sourceforge.net/project/aoo-extensions/1503/3/diccionarios-argentina_1.oxt"
 	es_ES_AL="http://extensions.libreoffice.org/extension-center/diccionario-espanol/releases/1.0/spanish-dictionary.oxt"
-	es_ES="subirlo a copy"
+	es_ES="https://github.com/ejmalfatti/libreoffice/blob/modificado/extensiones_OXT/es_ES.oxt"
 
 	crear_Dir # llamando a la funcion que crea el directorio tmporal	
 
@@ -69,7 +78,7 @@ function lb_Extensiones(){
 		echo " 2) Diccionario español Español y America Latina - v 0.5"
 		echo " 3) Diccionario español Español - v 0.6"
 		echo " 4) Salir de este menu"
-		read -p " Ingrese el numero de la accion que desar realizar: " opt
+		read -p " Ingrese el numero de la accion que desea realizar: " opt
 		clear
 		case $opt in
 				1)
@@ -77,6 +86,8 @@ function lb_Extensiones(){
 					echo "Descargando la extensión español Argentino..."
 					echo; sleep 1
 					wget -c $es_AR
+					echo
+					read -p "Proceso terminado. Presione cualquier tecla..." S
 					clear
 					;;
 				2)
@@ -84,6 +95,8 @@ function lb_Extensiones(){
 					echo "Descargando diccionario Español y America Latina..."
 					echo; sleep 1
 					wget -c $es_ES_AL
+					echo
+					read -p "Proceso terminado. Presione cualquier tecla..." S
 					clear
 					;;
 				3)
@@ -91,6 +104,8 @@ function lb_Extensiones(){
 					echo "Descargando diccionario español Español..."
 					echo; sleep 1
 					wget -c $es_ES
+					echo
+					read -p "Proceso terminado. Presione cualquier tecla..." S
 					clear
 					;;
 				4)
@@ -105,11 +120,15 @@ function lb_Apariencia(){
 	echo "Instalando los iconos para LibreOffice"
 	echo; sleep 1
 	apt-get -y install libreoffice-style-crystal libreoffice-style-galaxy libreoffice-style-hicontrast libreoffice-style-human libreoffice-style-oxygen libreoffice-style-sifr libreoffice-style-tango
+	echo
+	read -p "Proceso terminado. Presione cualquier tecla..." S
+	clear
 }
 function main(){
 	TRUE="true"
 	while [ "$TRUE" == "true" ]; do
-		echo "      ....:::: Menú principal ::::...."
+		echo
+		echo " .......::::::: Configuración de LibreOffice :::::::......."
 		echo
 		echo " 1) Instalar el idioma español en Libre Office"
 		echo " 2) Instalar los diccionarios desde los repositorios"
@@ -138,7 +157,7 @@ function main(){
 				lb_Apariencia
 				;;
 			6)
-				echo "Saliendo..."; sleep 2
+				echo " Saliendo..."; sleep 2
 				clear
 				exit 0
 				;;
